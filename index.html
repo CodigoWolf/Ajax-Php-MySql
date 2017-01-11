@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<title>Código Wolf</title>
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+	<link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+	<div id="contenido">
+		<div id="formulario">
+			<form id="frm">
+				<h3>Formulario de Registro</h3>				
+				<input type="text" placeholder="Producto" name="producto" id="producto">
+				<input type="text" placeholder="Precio" name="precio" id="precio">
+				<input type="text" placeholder="Stock" name="stock" id="stock">
+				<input type="submit" value="Guardar">
+			</form>
+			<div id="mensaje"></div>
+		</div>		
+	</div>
+	<script   src="https://code.jquery.com/jquery-2.2.4.min.js" 
+			  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+			  crossorigin="anonymous"></script>
+	<script>
+		$(document).on("ready", function(){
+			enviarDatos();
+		});
+
+		function enviarDatos(){
+			$("#frm").on("submit", function(e){
+				e.preventDefault();
+				var frm = $(this).serialize();
+				$.ajax({
+					"method":"POST",
+					"url": "producto.php",
+					"data": frm
+				}).done( function( info ){
+					$("#mensaje").addClass("mostrar");
+					//vamos a mostrar la respuesta del servidor
+					$("#mensaje").html( info );
+				});
+			});
+		}
+
+	</script>
+</body>
+</html>
